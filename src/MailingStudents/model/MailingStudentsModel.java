@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class MailingStudentsModel {
 
     public FileChooser fileChooser = new FileChooser();
-    public String filePath = "C:\\Users\\Leerling\\Desktop\\Programming\\MailingStudents\\CsvTestFiles\\Test.csv";
+    public String filePath = "/";
     public ObservableList<ScoreRow> scoreTable = FXCollections.observableArrayList();
     public List<List<String>> studentScoring = new ArrayList<>();
     public String teacherSetting;

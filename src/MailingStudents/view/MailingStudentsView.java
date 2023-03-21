@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import static javafx.scene.control.TabPane.TabClosingPolicy.UNAVAILABLE;
@@ -36,7 +37,7 @@ public class MailingStudentsView extends BorderPane {
     Button selectFile;
     Button confirmCSV;
     VBox openCSVRoot;
-    VBox overViewRoot;
+    BorderPane overViewRoot;
     TableView overViewTable;
     Label dragAndDropText;
     VBox mailingListRoot;
@@ -67,7 +68,7 @@ public class MailingStudentsView extends BorderPane {
         this.dragAndDropText = new Label("Drag and Drop CSV file here!");
 
 // OverviewTab -------------------------------------------------------------------------------
-        this.overViewRoot = new VBox();
+        this.overViewRoot = new BorderPane();
         this.overViewTable = new TableView<MailingStudentsModel.ScoreRow>();
         TableColumn<MailingStudentsModel.ScoreRow, String> emailColumn = new TableColumn<>("Email");
         TableColumn<MailingStudentsModel.ScoreRow, String> voornaamColumn = new TableColumn<>("Voornaam");
@@ -106,7 +107,7 @@ public class MailingStudentsView extends BorderPane {
 
     private void layoutNodes() {
 // OpenCSV -----------------------------------------------------------------------------------
-        dragAndDrop.setPrefSize(400, 200);
+        dragAndDrop.setMinSize(400, 200);
         dragAndDrop.setId("dragAndDrop");
         dragAndDrop.setAlignment(Pos.CENTER);
         dragAndDrop.getChildren().add(dragAndDropText);
@@ -116,14 +117,16 @@ public class MailingStudentsView extends BorderPane {
         openCSVButtons.setAlignment(Pos.BOTTOM_CENTER);
 
         openCSVRoot.getChildren().addAll(dragAndDrop, openCSVButtons);
-        openCSVRoot.setPadding(new Insets(100, 150, 100, 150));
         openCSVRoot.setSpacing(20);
 
+        VBox.setVgrow(dragAndDrop, Priority.ALWAYS);
         opencsvTab.setContent(openCSVRoot);
+
+        openCSVRoot.setPadding(new Insets(50, 50, 50, 50));
 
 // OverviewTab -------------------------------------------------------------------------------
         overViewRoot.setPadding(new Insets(10, 10, 10, 10));
-        overViewRoot.getChildren().addAll(overViewTable);
+        overViewRoot.setCenter(overViewTable);
 
         overviewTab.setContent(overViewRoot);
 
@@ -140,7 +143,9 @@ public class MailingStudentsView extends BorderPane {
         tabPane.getTabs().add(overviewTab);
         tabPane.getTabs().add(mailListTab);
         tabPane.setTabClosingPolicy(UNAVAILABLE);
-        tabPane.setPrefSize(960, 540);
-        this.setTop(tabPane);
+        tabPane.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.setCenter(tabPane);
+        this.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
     }
 }
